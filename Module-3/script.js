@@ -3,6 +3,7 @@
 
     var MainController = function(scope,http){
         scope.username = "Angular"
+        scope.repoSortOrder = "-stargazers_count"
 
 
         var onSuccess = function(response){
