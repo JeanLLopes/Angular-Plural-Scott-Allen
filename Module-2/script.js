@@ -1,3 +1,4 @@
-var MainController = function($scope){
-    $scope.message = "Hello Angular"
-}
+angular.module('MainModule',[])
+    .controller('MainController', function($scope){
+        $scope.message = "Hello Angular";
+})
