@@ -34,37 +34,10 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Efetuar busca</button>
                 </form>
-                <div ng-show="user">
-                    <h2>{{user.name}}</h2>
-                    <img ng-src="{{user.avatar_url}}" alt="{{user.login}}">
-                    <p>Selecione a Ordenação</p>
-                    <select class="form-control" ng-model="repoSortOrder">
-                        <option value="-stargazers_count">Start</option>
-                        <option value="+name">Name</option>
-                        <option value="+language">Language</option>
-                    </select>
 
-                </div>
-                
-                <br>
-                <br>
-                <table class="table table-hover table-bordered" ng-show="user">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Star</th>
-                            <th>Language</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="repo in repos | orderBy:repoSortOrder">
-                            <td>{{repo.name}}</td>
-                            <td>{{repo.stargazers_count | number:1}}</td>
-                            <td>{{repo.language}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                
+                <!--PARA USAR O NG-INCLUDE SUA APLICAÇÃO DEVE ESTAR
+                SENDO USADA EM UM SERVER-->
+                <div ng-include="'userDetails.html'" ng-show="user"></div>
             </div>
         </div>
         
