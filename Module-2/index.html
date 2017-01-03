@@ -7,9 +7,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Title Page</title>
 
-        <!--ANGULAR-->
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-        <script src="script.js"></script>
 
 
         <!-- Bootstrap CSS -->
@@ -22,12 +19,26 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body ng-controller="MainController">
+    <body ng-controller="MainController" class="container">
         <h1 class="text-center">{{message}}</h1>
+        <br>
+        
+        <div class="jumbotron">
+            <div class="container">
+                <h1>{{person.firstName}} {{person.lastName}}</h1>
+                <img ng-src="{{person.imageSource}}" alt="{{person.firstName}} {{person.lastName}}">
+            </div>
+        </div>
+        
 
         <!-- jQuery -->
         <script src="http://code.jquery.com/jquery.js"></script>
         <!-- Bootstrap JavaScript -->
         <script src="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    
+        <!--ANGULAR-->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+        <script src="script.js"></script>
+
     </body>
 </html>
