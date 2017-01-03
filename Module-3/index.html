@@ -23,15 +23,18 @@
         
         <div class="jumbotron">
             <div class="container">
-                {{username}}
-                <form role="form">
+                <div>{{error}}</div>
+                <form role="form" ng-submit="search(username)">
                     <div class="form-group">
                         <label for="">Insira o nome de usuario do GITHUB</label>
                         <input type="text" class="form-control" id="" placeholder="Username GITHIB" ng-model="username">
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Efetuar busca</button>
                 </form>
-                
+                <div>
+                    <h2>{{user.name}}</h2>
+                    <img ng-src="{{user.avatar_url}}" alt="{{user.login}}">
+                </div>
             </div>
         </div>
         
