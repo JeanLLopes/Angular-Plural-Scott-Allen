@@ -29,6 +29,32 @@
                 <img ng-src="{{person.imageSource}}" alt="{{person.firstName}} {{person.lastName}}">
             </div>
         </div>
+        <br>
+        <br>
+        
+        <!--APRESENTA EM CASO DE SUCESSO-->
+        <div ng-if="success != null">
+            <div class="jumbotron">
+                <div class="container">
+                    <h1>Infomações de Consulta de API do GITHUB com SUCESSO!</h1>
+                    <p>LOGIN GITHUB: {{success.login}}</p>
+                    <p>QUANTIDADE DE REPOSITORIOS NO GITHUB: {{success.public_repos}}</p>
+                    <img ng-src="{{success.avatar_url}}" alt="">
+                </div>
+            </div>
+        </div>
+
+        <!--APRESENTA EM CASO DE ERRO-->
+                <div ng-if="error != null">
+            <div class="jumbotron">
+                <div class="container">
+                    <h1>Infomações de Consulta de API do GITHUB com ERRO!</h1>
+                    <p>{{error}}</p>
+                </div>
+            </div>
+        </div>
+
+        
         
 
         <!-- jQuery -->
