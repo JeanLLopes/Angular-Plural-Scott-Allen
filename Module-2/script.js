@@ -1,23 +1,27 @@
-angular.module('MainModule',[])
+(function(){
 
-    //PARA USAMOS OS METODOS HTTP NOS INJETAMOS O ESCOPO $HTTP
-    //NA FUNÇÃO
-    .controller('MainController', function($scope, $http){
+    //NOS CRIAMOS O MODULO PRINCIPAL DO Angular
+    //NELE NOS PODEMOS INJETAE DENTRO OD PARENTESES ALGUMAS FEATURES A MAIS PARA NOSSO
+    //ANGULAR, COMO SE FOSEM using DO .NET
+    //ESTE MODULO DEVERA SER CITADO NO ng-app NA VIEW
+    var appAngular = angular.module("MainModule",[])
 
+    var MainController = function(s,h){
+        
         //PARA EFETUAR CONSUMO DE ITENS EM HTTP
         //DEVEMOS CRIAR AS VARIVEIS COM OS METODOS DE PROMISSE
         //QUE SERÃO EXECUTADOS COM OS RESULTADOS DA CONULTADO DA API
         var onSuccess = function(response){
-            $scope.success = response.data;
+            s.success = response.data;
         }
 
         var onError = function(response){
-            $scope.error = 'Server not return data';
+            s.error = 'Server not return data';
         }
 
         //AQU NOS CRIAMOS A FUNÇAÕ PARA PEGAR OS DADOS
         //AQUI NOS VAMOS PEGAR OS DADOS DO PROPRIO GITHUB
-        $http.get("https://ap.github.com/users/JeanLLopes")
+        h.get("https://api.github.com/users/JeanLLopes")
             .then(onSuccess,onError);    
 
 
@@ -29,8 +33,20 @@ angular.module('MainModule',[])
             imageSource: "https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/2/000/121/127/3fcecf0.jpg"
         }
 
-        $scope.message = "Hello Angular";
+        s.message = "Hello Angular";
         //PARA DEIXARMOS A VARIAVEL VISIVEL EM NOSSO SCOPE USAMOS A 
         //VARIAVEL DE SCOPE
-        $scope.person = person;
-})
+        s.person = person;
+
+    }
+
+
+    //AQUI NOS DEFINIMOS QUE DENTRO DO MODULE NOS VAMOS TE RUMA controller
+    //DEPOIS NOS DAMOS UM NOME PARA A CONTROLLER
+    //E PASSAMOS OS ITENS QUE IREMOS INJETAR NA CONTROLLER
+    //COMO O $scope E O $http,
+    //E COMO ULTIMO PARAMETRO NOS PASSAMOS O NOME DA VARIVEL QUE POSSUI A CONTROLLER
+    appAngular.controller("MainController",["$scope","$http", MainController])
+
+
+}());
