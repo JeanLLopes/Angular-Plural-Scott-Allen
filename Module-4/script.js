@@ -1,22 +1,21 @@
 (function(){
     var appAngular = angular.module("MainModule",[])
 
-    var MainController = function(scope,http,interval,log,anchorScroll,location){
+    var MainController = function(scope,servicesGithub,interval,log,anchorScroll,location){
 
-        var onSuccess = function(response){
-            scope.user = response.data;
+        var onSuccess = function(data){
+            scope.user = data;
             
             //CASO TENHA DADO SUCESSO NOS VAMOS EFETUAR OUTRA BUSCA
             //AGORA PELOS REPOSITORIOS DE UM USUARIO
-            http.get(scope.user.repos_url)
-                .then(onSuccessRepos,onError)
+            servicesGithub.getRepos(scope.user).then(onSuccessRepos,onError)
         }
-        var  onError= function(response){
+        var  onError= function(data){
             scope.error = 'Erro durante processo..';
         }
 
-        var onSuccessRepos = function(response){
-            scope.repos = response.data;
+        var onSuccessRepos = function(data){
+            scope.repos = data;
 
             //AQUI NOS VAMOS APLICAR O SCROLLS DE ELEMENTOS E TAMBEM A BUSCA POR ELEMENTOS
             //EM NOSSO DOM
@@ -49,8 +48,7 @@
 
         scope.search = function(username){
             log.info("Searching for: " + username)
-            http.get("https://api.github.com/users/" + username)
-                .then(onSuccess, onError);
+            servicesGithub.getUser(username).then(onSuccess, onError);
 
             if(countdownInterval){
                 //CANCELAMOS A CONSULTA POR INTERVALO
@@ -74,5 +72,7 @@
     //anchorScroll: AJUDA A EFETUAR SCROLLS COM A PAGINA PARA LEVAR O USUARIO A ALGUM LOCAL
     //QUE DESEJAMOS
     //location: AJUDA A LOCALIZAR ELEMENTOS HTML NO SEU DOM
-    appAngular.controller("MainController",["$scope","$http","$interval","$log","$anchorScroll","$location", MainController])
+
+    //QUANDO COMEÇAMOS A USAR O SERVICE.JS NOS PARAMOS DE USAR O $http NA CONTROLLER 
+    appAngular.controller("MainController",["$scope","servicesGithub","$interval","$log","$anchorScroll","$location", MainController])
 }());
