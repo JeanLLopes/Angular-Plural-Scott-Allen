@@ -12,6 +12,12 @@
             .when("user/:username",{
                 templateUrl: "user.html",
                 controller: "UserController"
+            })            
+            
+            //AQUI NOS USAMOS UM PARAMETRO DE URL
+            .when("user/:username/:reponame",{
+                templateUrl: "repo.html",
+                controller: "RepoController"
             })
             .otherwise({redirectTo:"/main"})
     })
