@@ -27,7 +27,7 @@
         <div class="jumbotron">
             <div class="container">
                 <div>{{error}}</div>
-                <div>Iniciando a consulta automatica em: {{coutdown}} seg</div>
+                <div ng-show="coutdown">Iniciando a consulta automatica em: {{coutdown}} seg</div>
                 <form role="form" ng-submit="search(username)">
                     <div class="form-group">
                         <label for="">Insira o nome de usuario do GITHUB</label>

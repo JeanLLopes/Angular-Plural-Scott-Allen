@@ -1,7 +1,7 @@
 (function(){
     var appAngular = angular.module("MainModule",[])
 
-    var MainController = function(scope,http,interval){
+    var MainController = function(scope,http,interval,log){
 
         var onSuccess = function(response){
             scope.user = response.data;
@@ -27,16 +27,27 @@
                 scope.search(scope.username)
             }
         }
+        
 
+        //CRIAMOS UMA VARIAVEL QUE SERÁ RESONSAVEL POR NOS DISSER QUE O USUARIO
+        //CLICOU NO BOTAO, OU SE NÃO E ASSIM APAGAR O CONTADOR DA TELA
+        var countdownInterval = null
         var startCountdown = function(){
             //IREMOS USA UM INTERVALO DE 1seg PARA CADA INTERAÇAÕ COM A FUNÇÃO DE 
             //DECREMENTO
-            interval(decrementCountdown,1000,scope.coutdown)
+            countdownInterval = interval(decrementCountdown,1000,scope.coutdown);
         }
 
         scope.search = function(username){
+            log.info("Searching for: " + username)
             http.get("https://api.github.com/users/" + username)
                 .then(onSuccess, onError);
+
+            if(countdownInterval){
+                //CANCELAMOS A CONSULTA POR INTERVALO
+                interval.cancel(countdownInterval);
+                scope.coutdown = null;
+            }
         }
 
         scope.username = "Angular"
@@ -47,5 +58,9 @@
 
     }
 
-    appAngular.controller("MainController",["$scope","$http","$interval", MainController])
+    //INJETOMOS DOIS  NOVOS SERVIÇOS
+    //INTERVAL: USA O INTERVAL E O SETTIMEOUT DO JAVASCRIPT
+    //LOG: HABILITA OS LOGS NA SUA APLICAÇÕA, USANDO O CONSOLE.LOG PARA APRESENTAR 
+    //AS INFORMAÇÕES
+    appAngular.controller("MainController",["$scope","$http","$interval","$log", MainController])
 }());
