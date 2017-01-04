@@ -1,7 +1,7 @@
 (function(){
     var appAngular = angular.module("MainModule")
 
-    var MainController = function(scope,servicesGithub,interval,log,anchorScroll,location){
+    var UserController = function(scope,servicesGithub,routeParams){
 
         var onSuccess = function(data){
             scope.user = data;
@@ -16,54 +16,15 @@
 
         var onSuccessRepos = function(data){
             scope.repos = data;
+        };
 
-            //AQUI NOS VAMOS APLICAR O SCROLLS DE ELEMENTOS E TAMBEM A BUSCA POR ELEMENTOS
-            //EM NOSSO DOM
-            //PRIMEIRO VAMOSLOCALIZAR O ELEMENTO NO DOM
-            //BUSCAMOS O ELEMENTO PELO ID
-            location.hash("userDetails")
+        //CRIAMOS UMA VARIAVEL RESPONSAVEL POR RECEBER O PARAMETRO DE URL
+        scope.username = routeParams.username;
+        scope.repoSortOrder = "-stargazers_count";
 
-            //AGORA EFETUAMOS UM SCROLL ATE O ELEMENTO
-            anchorScroll();
-        }
-
-        //CRIAMOS UMA FUNÇÃO QUE VAIPAENAS EFETUAR O DECREMENTO DADO
-        //VARIAVEL coutdown
-        var decrementCountdown = function(){
-            scope.coutdown -= 1;
-            if(scope.coutdown < 1){
-                scope.search(scope.username)
-            }
-        }
-        
-
-        //CRIAMOS UMA VARIAVEL QUE SERÁ RESONSAVEL POR NOS DISSER QUE O USUARIO
-        //CLICOU NO BOTAO, OU SE NÃO E ASSIM APAGAR O CONTADOR DA TELA
-        var countdownInterval = null
-        var startCountdown = function(){
-            //IREMOS USA UM INTERVALO DE 1seg PARA CADA INTERAÇAÕ COM A FUNÇÃO DE 
-            //DECREMENTO
-            countdownInterval = interval(decrementCountdown,1000,scope.coutdown);
-        }
-
-        scope.search = function(username){
-            log.info("Searching for: " + username)
-            servicesGithub.getUser(username).then(onSuccess, onError);
-
-            if(countdownInterval){
-                //CANCELAMOS A CONSULTA POR INTERVALO
-                interval.cancel(countdownInterval);
-                scope.coutdown = null;
-            }
-        }
-
-        scope.username = "Angular"
-        scope.repoSortOrder = "-stargazers_count"
-        //CRIAMOS UMA VARIAVEL RESPONSAVEL PELO NUMERO TOTAL  DO CONTADOR
-        scope.coutdown = 5;
-        startCountdown();
-
-    }
+        //EFETUAMOS UM GET PARA PEGAR AS INFORMAÇÕES DA API
+        servicesGithub.getUser(scope.username).then(onSuccess,onError);
+    };
 
     //INJETOMOS DOIS  NOVOS SERVIÇOS
     //INTERVAL: USA O INTERVAL E O SETTIMEOUT DO JAVASCRIPT
@@ -72,7 +33,8 @@
     //anchorScroll: AJUDA A EFETUAR SCROLLS COM A PAGINA PARA LEVAR O USUARIO A ALGUM LOCAL
     //QUE DESEJAMOS
     //location: AJUDA A LOCALIZAR ELEMENTOS HTML NO SEU DOM
+    //$routeParams: AQUI NOS HABILITAMOS O USO DE PARAMETROS DE URL 
 
     //QUANDO COMEÇAMOS A USAR O SERVICE.JS NOS PARAMOS DE USAR O $http NA CONTROLLER 
-    appAngular.controller("MainController",["$scope","servicesGithub","$interval","$log","$anchorScroll","$location", MainController])
+    appAngular.controller("UserController",["$scope","servicesGithub","$routeParams",UserController]);
 }());

@@ -28,7 +28,10 @@
                 interval.cancel(countdownInterval);
                 scope.coutdown = null;
             }
-            //
+            
+            //AQUI NOS VAMOS DIRECIONAR O USUARIO PARA A PAGINA DE RESULTADO
+            //ASSIM QUE ELE CLICAR NA BUSCA
+            location.path("/user/" + username);
         }
 
         scope.username = "Angular"
