@@ -1,7 +1,7 @@
 (function(){
     var appAngular = angular.module("MainModule",[])
 
-    var MainController = function(scope,http,interval,log){
+    var MainController = function(scope,http,interval,log,anchorScroll,location){
 
         var onSuccess = function(response){
             scope.user = response.data;
@@ -17,6 +17,15 @@
 
         var onSuccessRepos = function(response){
             scope.repos = response.data;
+
+            //AQUI NOS VAMOS APLICAR O SCROLLS DE ELEMENTOS E TAMBEM A BUSCA POR ELEMENTOS
+            //EM NOSSO DOM
+            //PRIMEIRO VAMOSLOCALIZAR O ELEMENTO NO DOM
+            //BUSCAMOS O ELEMENTO PELO ID
+            location.hash("userDetails")
+
+            //AGORA EFETUAMOS UM SCROLL ATE O ELEMENTO
+            anchorScroll();
         }
 
         //CRIAMOS UMA FUNÇÃO QUE VAIPAENAS EFETUAR O DECREMENTO DADO
@@ -62,5 +71,8 @@
     //INTERVAL: USA O INTERVAL E O SETTIMEOUT DO JAVASCRIPT
     //LOG: HABILITA OS LOGS NA SUA APLICAÇÕA, USANDO O CONSOLE.LOG PARA APRESENTAR 
     //AS INFORMAÇÕES
-    appAngular.controller("MainController",["$scope","$http","$interval","$log", MainController])
+    //anchorScroll: AJUDA A EFETUAR SCROLLS COM A PAGINA PARA LEVAR O USUARIO A ALGUM LOCAL
+    //QUE DESEJAMOS
+    //location: AJUDA A LOCALIZAR ELEMENTOS HTML NO SEU DOM
+    appAngular.controller("MainController",["$scope","$http","$interval","$log","$anchorScroll","$location", MainController])
 }());
